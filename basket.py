@@ -35,9 +35,9 @@ def main():
         print(result[0], result[1])
 
 def get_num_bw(scores):
-    if not scores:
+    min_s = max_s = next(scores, None)
+    if min_s is None:  # empty scores list
         return 0, 0
-    min_s = max_s = next(scores)
     num_best = num_worst = 0
 
     for s in scores:
