@@ -22,8 +22,8 @@ if __name__ == "__main__":
     parser.add_argument('file2')
     args = parser.parse_args()
 
-    str1 = b""
-    str2 = b""
+    str1 = bytearray()
+    str2 = bytearray()
     with open(args.file1, 'rb') as fd1, open(args.file2, 'rb') as fd2:
         while True:
             c1 = fd1.read(1)
@@ -31,7 +31,9 @@ if __name__ == "__main__":
             if not c1 and not c2:
                 break
             if c1 != c2:
-                str1 += c1
-                str2 += c2
-    print("File 1:\n\n{}\n\n".format(repr(str1)[2:-1]))
-    print("File 2:\n\n{}".format(repr(str2)[2:-1]))
+                print(c1)
+                print(c2)
+                str1.extend(c1 or b"")
+                str2.extend(c2 or b"")
+    print("File 1:\n\n{}\n\n".format(repr(str1)[12:-1]))
+    print("File 2:\n\n{}".format(repr(str2)[12:-1]))
