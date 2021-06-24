@@ -1,0 +1,81 @@
+package main
+
+import (
+    "bufio"
+    "fmt"
+    "io"
+    "os"
+    "strconv"
+    "strings"
+)
+
+/*
+ * Complete the 'hurdleRace' function below.
+ *
+ * The function is expected to return an INTEGER.
+ * The function accepts following parameters:
+ *  1. INTEGER k
+ *  2. INTEGER_ARRAY height
+ */
+
+func max(ary []int32) int32 {
+    max := ary[0]
+    for i := 1; i < len(ary); i++ {
+        if ary[i] > max {
+            max = ary[i]
+        }
+    }
+    return max
+}
+
+func hurdleRace(k int32, height []int32) int32 {
+    maxVal := max(height)
+    if maxVal > k {
+        return maxVal - k
+    }
+    return 0
+}
+
+func main() {
+    reader := bufio.NewReaderSize(os.Stdin, 16 * 1024 * 1024)
+
+    firstMultipleInput := strings.Split(strings.TrimSpace(readLine(reader)), " ")
+
+    nTemp, err := strconv.ParseInt(firstMultipleInput[0], 10, 64)
+    checkError(err)
+    n := int32(nTemp)
+
+    kTemp, err := strconv.ParseInt(firstMultipleInput[1], 10, 64)
+    checkError(err)
+    k := int32(kTemp)
+
+    heightTemp := strings.Split(strings.TrimSpace(readLine(reader)), " ")
+
+    var height []int32
+
+    for i := 0; i < int(n); i++ {
+        heightItemTemp, err := strconv.ParseInt(heightTemp[i], 10, 64)
+        checkError(err)
+        heightItem := int32(heightItemTemp)
+        height = append(height, heightItem)
+    }
+
+    result := hurdleRace(k, height)
+
+    fmt.Printf("%d\n", result)
+}
+
+func readLine(reader *bufio.Reader) string {
+    str, _, err := reader.ReadLine()
+    if err == io.EOF {
+        return ""
+    }
+
+    return strings.TrimRight(string(str), "\r\n")
+}
+
+func checkError(err error) {
+    if err != nil {
+        panic(err)
+    }
+}
